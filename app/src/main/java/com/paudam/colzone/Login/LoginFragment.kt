@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.paudam.colzone.R
 import com.paudam.colzone.databinding.FragmentLoginBinding
 
@@ -24,6 +25,10 @@ class LoginFragment : Fragment() {
         )
         loginVM = ViewModelProvider(this).get(LoginVM::class.java)
 
+
+        binding.buttonRegister.setOnClickListener(){
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
         return binding.root
     }
 }
