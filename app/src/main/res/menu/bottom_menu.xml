@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/buscadorFragment"
+        android:icon="@drawable/lupa"
+        android:title="Buscador" />
+
+    <item
+        android:id="@+id/favoritosFragment"
+        android:icon="@drawable/heart"
+        android:title="Favoritos" />
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/homeicon2"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/chatsGeneralFragment"
+        android:icon="@drawable/mssg"
+        android:title="Chats" />
+
+    <item
+        android:id="@+id/perfilGeneralFragment"
+        android:icon="@drawable/user"
+        android:title="Perfil" />
+
+</menu>
