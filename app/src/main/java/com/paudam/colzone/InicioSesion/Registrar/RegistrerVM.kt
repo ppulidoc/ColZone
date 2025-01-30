@@ -1,4 +1,4 @@
-package com.paudam.colzone.Registrar
+package com.paudam.colzone.InicioSesion.Registrar
 
 import androidx.lifecycle.ViewModel
 

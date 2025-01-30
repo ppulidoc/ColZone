@@ -1,4 +1,4 @@
-package com.paudam.colzone.Login
+package com.paudam.colzone.InicioSesion.Login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

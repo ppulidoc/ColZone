@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/imagenfondologin"
-        tools:context=".Login.LoginFragment">
+        tools:context=".InicioSesion.Login.LoginFragment">
 
 
         <TextView

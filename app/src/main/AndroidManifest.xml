@@ -13,7 +13,10 @@
         android:theme="@style/Theme.ColZone"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".BodyApp.BodyApp"
+            android:exported="false" />
+        <activity
+            android:name=".InicioSesion.InicioSesionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

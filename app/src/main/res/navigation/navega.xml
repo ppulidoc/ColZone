@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.paudam.colzone.Login.LoginFragment"
+        android:name="com.paudam.colzone.InicioSesion.Login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,6 +16,6 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.paudam.colzone.Registrar.RegisterFragment"
+        android:name="com.paudam.colzone.InicioSesion.Registrar.RegisterFragment"
         android:label="RegisterFragment" />
 </navigation>

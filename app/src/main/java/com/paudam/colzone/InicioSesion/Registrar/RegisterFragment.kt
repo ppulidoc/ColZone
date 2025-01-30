@@ -1,4 +1,4 @@
-package com.paudam.colzone.Registrar
+package com.paudam.colzone.InicioSesion.Registrar
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.paudam.colzone.Login.LoginVM
+import com.paudam.colzone.InicioSesion.Login.LoginVM
 import com.paudam.colzone.R
 import com.paudam.colzone.databinding.FragmentRegisterBinding
 
