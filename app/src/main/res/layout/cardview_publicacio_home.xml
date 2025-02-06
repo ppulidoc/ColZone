@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:id="@+id/linearId"
+        android:layout_width="match_parent"
+        android:layout_height="679dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/textViewNomLabel"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Nombre Usuario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imatgeProducte"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textNomPublicacio"
+                android:layout_width="207dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:numStars="5"
+                android:scaleX="1"
+                android:scaleY="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <EditText
+                android:id="@+id/editTextComentarios"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:ems="9"
+                android:hint="Entra un comentario"
+                android:inputType="text"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_weight="1"
+                android:paddingRight="120dp"
+                app:srcCompat="@drawable/enter_arrow" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+
+            <TextView
+                android:id="@+id/textComentario1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_weight="1"
+                android:text="comentario1" />
+
+            <TextView
+                android:id="@+id/textComentario2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_weight="1"
+                android:text="comentario2" />
+        </LinearLayout>
+
+        </LinearLayout>
+</androidx.cardview.widget.CardView>
