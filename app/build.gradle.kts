@@ -52,6 +52,10 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     //implementation(libs.androidx.room.common)
 
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-analytics:21.5.1")
+    implementation("com.google.firebase:firebase-firestore:25.1.2")
+
     //DEPENDENCIES A MÀ PER A ROOM
     implementation("androidx.room:room-runtime:2.6.1")
    /* implementation(libs.androidx.navigation.fragment.ktx)

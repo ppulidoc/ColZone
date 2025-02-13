@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "529167411134",
+    "project_id": "colzone-1d901",
+    "storage_bucket": "colzone-1d901.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529167411134:android:f8b467ef97d34ce627bbef",
+        "android_client_info": {
+          "package_name": "com.paudam.colzone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP0I8b20Y2wRrUOm3YB2yl7dzQL-NtTb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
