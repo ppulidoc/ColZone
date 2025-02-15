@@ -39,21 +39,21 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/editTextUser"
+            android:id="@+id/editTextEmail"
             android:layout_width="279dp"
             android:layout_height="69dp"
             android:layout_marginTop="124dp"
             android:ems="10"
-            android:hint="Nombre de user"
+            android:hint="Email"
             android:paddingLeft="20dp"
             android:background="@drawable/input_styles"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/editTextPassword"
             android:layout_width="277dp"
             android:layout_height="66dp"
             android:layout_marginTop="12dp"
@@ -65,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
         <Button
             android:id="@+id/buttonEnterApp"
@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
         <Button
             android:id="@+id/buttonRegister"

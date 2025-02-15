@@ -12,6 +12,10 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.paudam.colzone.R
 import com.paudam.colzone.databinding.ActivityBodyAppBinding
 
+enum class ProviderType{
+    BASIC
+}
+
 class BodyApp : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
