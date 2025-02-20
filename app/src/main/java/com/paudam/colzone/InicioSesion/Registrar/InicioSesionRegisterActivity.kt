@@ -45,10 +45,6 @@ class InicioSesionRegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (password !== passwrdConfirm ) {
-                viewModelLogin.showAlert("La contraseña tiene que ser igual", this)
-                return@setOnClickListener
-            }
 
             //crear el user en el auth
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
