@@ -2,56 +2,65 @@ package com.paudam.colzone.InicioSesion.Registrar
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.paudam.colzone.BodyApp.BodyApp
-import com.paudam.colzone.BodyApp.ProviderType
+import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.InicioSesion.Login.InicioSesionLoginActivity
 import com.paudam.colzone.R
 import com.paudam.colzone.databinding.ActivityInicioSesionRegisterBinding
-
 class InicioSesionRegisterActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private val viewModelLogin: InicioSesionRegisterVM by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModelLogin: InicioSesionRegisterVM by viewModels()
-        val binding: ActivityInicioSesionRegisterBinding = DataBindingUtil.setContentView(this,
-            R.layout.activity_inicio_sesion_register
+        val binding: ActivityInicioSesionRegisterBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_inicio_sesion_register
         )
 
-        binding.buttonEnterApp.setOnClickListener() {
-            if (binding.editTextEmail.text.isNotEmpty() && binding.editTextTextPassword.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                    binding.editTextEmail.text.toString(),
-                    binding.editTextTextPassword.text.toString()
-                ).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Cuando la creación del usuario sea exitosa, redirigir al Login
-                        val GoLogin = Intent(this, InicioSesionLoginActivity::class.java)
-                        startActivity(GoLogin)
-                        finish() // Asegúrate de cerrar la actividad de registro
-                    } else {
-                        // Si ocurre un error, mostrar un mensaje
-                        showAlert("Error al registrar el usuario")
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        binding.buttonEnterApp.setOnClickListener {
+            //coger campos necesarios para bdd y para comprovaciones
+            val email = binding.editTextEmail.text.toString().trim()
+            val password = binding.editTextTextPassword.text.toString().trim()
+            val nombreUser = binding.editTextUser.text.toString().trim()
+            val edadUser = binding.editTextAge.text.toString().trim()
+
+            // comporvaciones
+            if (email.isEmpty() || password.isEmpty() || nombreUser.isEmpty() || edadUser.isEmpty()) {
+                viewModelLogin.showAlert("Todos los campos son obligatorios", this)
+                return@setOnClickListener
+            }
+
+            val edad = edadUser.toIntOrNull()
+            if (edad == null || edad < 0) {
+                viewModelLogin.showAlert("La edad debe ser un número válido", this)
+                return@setOnClickListener
+            }
+
+            //crear el user en el auth
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    //si el auth es correcto busca si existe el usuario
+                    task.result?.user?.let { userActual ->
+                        //si entra bien hace el insert
+                        viewModelLogin.createUser(db, userActual, nombreUser, edad, this)
+                        startActivity(Intent(this, InicioSesionLoginActivity::class.java))
+                        finish()
+                    } ?: run {
+                        viewModelLogin.showAlert("Error: No se pudo obtener el usuario después del registro", this)
                     }
+                } else {
+                    viewModelLogin.showAlert("Error al registrar usuario: ${task.exception?.message}", this)
                 }
-            } else {
-                showAlert("Por favor, ingresa un correo y una contraseña válidos")
             }
         }
     }
-
-    private fun showAlert(message: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage(message)
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
 }
+

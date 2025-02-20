@@ -59,7 +59,7 @@
             android:id="@+id/editTextUser"
             android:layout_width="279dp"
             android:layout_height="69dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="72dp"
             android:background="@drawable/input_styles"
             android:ems="10"
             android:hint="Nombre de user"
@@ -70,25 +70,40 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <EditText
+            android:id="@+id/editTextAge"
+            android:layout_width="279dp"
+            android:layout_height="69dp"
+            android:layout_marginTop="148dp"
+            android:background="@drawable/input_styles"
+            android:ems="10"
+            android:hint="Edad"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <EditText
             android:id="@+id/editTextTextPassword"
             android:layout_width="277dp"
             android:layout_height="66dp"
             android:layout_marginTop="12dp"
+            android:background="@drawable/input_styles"
             android:ems="10"
             android:hint="Contraseña"
-            android:paddingLeft="20dp"
-            android:background="@drawable/input_styles"
             android:inputType="textPassword"
+            android:paddingLeft="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
 
         <EditText
             android:id="@+id/editTextTextPasswordConfirm"
             android:layout_width="277dp"
             android:layout_height="66dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/input_styles"
             android:ems="10"
             android:hint="Repite la contraseña"
@@ -97,13 +112,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="277dp"
             android:layout_height="66dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/input_styles"
             android:ems="10"
             android:hint="Introduce un correo"
@@ -111,13 +126,13 @@
             android:paddingLeft="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPasswordConfirm" />
 
         <Button
             android:id="@+id/buttonEnterApp"
             android:layout_width="47dp"
             android:layout_height="45dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="84dp"
             android:backgroundTint="#00FFFFFF"
             android:foreground="@drawable/enter_arrow"
             android:visibility="visible"
