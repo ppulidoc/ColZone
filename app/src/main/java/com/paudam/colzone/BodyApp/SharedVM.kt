@@ -1,7 +1,5 @@
-package com.paudam.colzone
+package com.paudam.colzone.BodyApp
 
-import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 class SharedVM: ViewModel() {

@@ -7,19 +7,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.paudam.colzone.BodyApp.BodyApp
 import com.paudam.colzone.BodyApp.ProviderType
 import com.paudam.colzone.InicioSesion.Registrar.InicioSesionRegisterActivity
 import com.paudam.colzone.R
-import com.paudam.colzone.SharedVM
+import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.databinding.ActivityInicioSesionLoginBinding
 
 class InicioSesionLoginActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private val viewModelLogin: InicioSesionLoginVM by viewModels()
-    private val sharedViewModel:SharedVM by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,6 +27,7 @@ class InicioSesionLoginActivity : AppCompatActivity() {
             R.layout.activity_inicio_sesion_login
         )
 
+        var userActual = "";
         binding.buttonEnterApp.setOnClickListener() {
             //Aqui ira comprovacion bdd
             if (binding.editTextEmail.text.isNotEmpty() && binding.editTextPassword.text.isNotEmpty()) {
@@ -38,8 +37,8 @@ class InicioSesionLoginActivity : AppCompatActivity() {
                         binding.editTextPassword.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            sharedViewModel.userActual(binding.editTextEmail.text.toString())
-                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                            userActual = binding.editTextEmail.text.toString()
+                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, userActual)
                         } else {
                             showAlert()
                         }
@@ -64,10 +63,11 @@ class InicioSesionLoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email: String, provider: ProviderType) {
+    private fun showHome(email: String, provider: ProviderType, userActual: String) {
         val appIntent = Intent(this, BodyApp::class.java).apply {
             putExtra("email", email)
             putExtra("provider", provider.name)
+            putExtra("userActual", userActual )
         }
         startActivity(appIntent)
 
