@@ -29,6 +29,7 @@ class InicioSesionRegisterActivity : AppCompatActivity() {
             //coger campos necesarios para bdd y para comprovaciones
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextTextPassword.text.toString().trim()
+            val passwrdConfirm = binding.editTextTextPasswordConfirm.text.toString().trim()
             val nombreUser = binding.editTextUser.text.toString().trim()
             val edadUser = binding.editTextAge.text.toString().trim()
 
@@ -41,6 +42,11 @@ class InicioSesionRegisterActivity : AppCompatActivity() {
             val edad = edadUser.toIntOrNull()
             if (edad == null || edad < 0) {
                 viewModelLogin.showAlert("La edad debe ser un número válido", this)
+                return@setOnClickListener
+            }
+
+            if (password !== passwrdConfirm ) {
+                viewModelLogin.showAlert("La contraseña tiene que ser igual", this)
                 return@setOnClickListener
             }
 

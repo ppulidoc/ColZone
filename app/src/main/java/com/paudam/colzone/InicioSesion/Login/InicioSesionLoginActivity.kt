@@ -13,14 +13,17 @@ import com.paudam.colzone.BodyApp.BodyApp
 import com.paudam.colzone.BodyApp.ProviderType
 import com.paudam.colzone.InicioSesion.Registrar.InicioSesionRegisterActivity
 import com.paudam.colzone.R
+import com.paudam.colzone.SharedVM
 import com.paudam.colzone.databinding.ActivityInicioSesionLoginBinding
 
 class InicioSesionLoginActivity : AppCompatActivity() {
     private lateinit var navController: NavController
+    private val viewModelLogin: InicioSesionLoginVM by viewModels()
+    private val sharedViewModel:SharedVM by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModelLogin: InicioSesionLoginVM by viewModels()
+
         val binding: ActivityInicioSesionLoginBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_inicio_sesion_login
@@ -35,6 +38,7 @@ class InicioSesionLoginActivity : AppCompatActivity() {
                         binding.editTextPassword.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
+                            sharedViewModel.userActual(binding.editTextEmail.text.toString())
                             showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
                         } else {
                             showAlert()
