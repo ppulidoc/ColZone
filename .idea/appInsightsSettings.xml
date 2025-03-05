@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.paudam.colzone" />
-                  <option name="mobileSdkAppId" value="1:529167411134:android:f8b467ef97d34ce627bbef" />
-                  <option name="projectId" value="colzone-1d901" />
-                  <option name="projectNumber" value="529167411134" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

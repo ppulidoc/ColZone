@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.R
 import com.paudam.colzone.databinding.FragmentPerfilGeneralBinding
@@ -18,6 +19,8 @@ class PerfilGeneralFragment : Fragment() {
 
     private lateinit var binding: FragmentPerfilGeneralBinding
     private val sharedViewModel: SharedVM by activityViewModels()
+    private lateinit var db: FirebaseFirestore
+    private lateinit var perfilGeneralVM: PerfilGeneralVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,9 +30,25 @@ class PerfilGeneralFragment : Fragment() {
             inflater,
             R.layout.fragment_perfil_general, container, false
         )
+        perfilGeneralVM = ViewModelProvider(this).get(PerfilGeneralVM::class.java)
+
+        // Inicializar Firestore
+        db = FirebaseFirestore.getInstance()
+
+        // Agafar usuariactual
+        var userActual = ""
+        userActual = sharedViewModel.userActual.toString()
+
+        //Obtenir dades user
+        perfilGeneralVM.obtenirUsername(db, userActual) { name ->
+            var userName = name
+            binding.textViewUsername.text = name ?: "Usuario no encontrado"
+        }
 
 
-        binding.textViewCorreo.text = sharedViewModel.userActual
+
+
+
 
         return binding.root
     }
