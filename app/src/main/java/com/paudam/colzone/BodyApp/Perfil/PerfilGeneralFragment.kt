@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.R
@@ -43,6 +44,10 @@ class PerfilGeneralFragment : Fragment() {
         perfilGeneralVM.obtenirUsername(db, userActual) { name ->
             var userName = name
             binding.textViewUsername.text = name ?: "Usuario no encontrado"
+        }
+
+        binding.addPubliButton.setOnClickListener(){
+            findNavController().navigate(R.id.action_perfilGeneralFragment_to_crearPublicacionFragment)
         }
 
 

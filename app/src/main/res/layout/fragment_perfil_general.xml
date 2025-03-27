@@ -9,45 +9,18 @@
         android:layout_height="match_parent"
         tools:context=".BodyApp.Perfil.PerfilGeneralFragment">
 
+
         <ImageButton
             android:id="@+id/imageButtonAddUser"
             android:layout_width="38dp"
             android:layout_height="36dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.413"
+            app:layout_constraintHorizontal_bias="0.212"
             app:layout_constraintStart_toEndOf="@+id/imageButtonChats"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.255"
+            app:layout_constraintVertical_bias="0.322"
             app:srcCompat="@drawable/adduser" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FRAGMENT PERFIL"
-            android:textAlignment="center"
-            android:textSize="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.471" />
-
-        <TextView
-            android:id="@+id/textViewCorreo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="correo"
-            android:textAlignment="center"
-            android:textSize="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.469"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.388" />
 
         <TextView
             android:id="@+id/textViewUsername"
@@ -58,33 +31,47 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.611"
+            app:layout_constraintHorizontal_bias="0.599"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.246" />
+            app:layout_constraintVertical_bias="0.363" />
 
         <ImageButton
             android:id="@+id/imageButtonChats"
             android:layout_width="38dp"
             android:layout_height="36dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="36dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintStart_toEndOf="@+id/textViewUsername"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.255"
+            app:layout_constraintVertical_bias="0.322"
             app:srcCompat="@drawable/message" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="410dp"
-            android:layout_height="614dp"
+            android:layout_width="match_parent"
+            android:layout_height="775dp"
             android:background="@color/gris"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.571"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            tools:context=".BodyApp.Perfil.PerfilGeneralFragment"></androidx.constraintlayout.widget.ConstraintLayout>
+            tools:context=".BodyApp.Perfil.PerfilGeneralFragment">
+
+
+            <ImageButton
+                android:id="@+id/addPubliButton"
+                android:layout_width="113dp"
+                android:layout_height="111dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.111"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/add_publi" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/imageViewProfile"

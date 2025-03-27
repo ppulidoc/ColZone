@@ -27,5 +27,17 @@
         android:id="@+id/perfilGeneralFragment"
         android:name="com.paudam.colzone.BodyApp.Perfil.PerfilGeneralFragment"
         android:label="fragment_perfil_general"
-        tools:layout="@layout/fragment_perfil_general" />
+        tools:layout="@layout/fragment_perfil_general" >
+        <action
+            android:id="@+id/action_perfilGeneralFragment_to_crearPublicacionFragment"
+            app:destination="@id/crearPublicacionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearPublicacionFragment"
+        android:name="com.paudam.colzone.BodyApp.Perfil.CrearPubli.CrearPublicacionFragment"
+        android:label="CrearPublicacionFragment" >
+        <action
+            android:id="@+id/action_crearPublicacionFragment_to_perfilGeneralFragment"
+            app:destination="@id/perfilGeneralFragment" />
+    </fragment>
 </navigation>
