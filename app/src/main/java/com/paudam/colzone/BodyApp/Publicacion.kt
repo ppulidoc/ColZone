@@ -7,6 +7,7 @@ data class Publicacion(
     val userName: String = "",
     val title: String = "",
     val rank: Int = 0,
+    val favs: Boolean = false,
     val commentsId: Timestamp? = null,
     val date: Timestamp = Timestamp.now(),
     val imageUrl: String = "default_example.webp"

@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.paudam.colzone.BodyApp.Publicacion
 import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.R
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
 
     private fun obtenerPublicaciones() {
         db.collection("publicaciones")
-            .orderBy("date") // Ordenar por fecha (opcional)
+            .orderBy("date",  Query.Direction.DESCENDING) // Ordenar por fecha (opcional)
             .get()
             .addOnSuccessListener { documents ->
                 publiList.clear()

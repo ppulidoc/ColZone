@@ -23,6 +23,7 @@ class CrearPublicacionVM: ViewModel() {
             "userName" to userName,
             "title" to title,
             "rank" to rank,
+            "favs" to false,
             "commentsId" to commentsId,
             "date" to Timestamp.now() // Guardamos la fecha actual
         )
