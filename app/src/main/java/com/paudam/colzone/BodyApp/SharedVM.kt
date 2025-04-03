@@ -29,4 +29,5 @@ class SharedVM: ViewModel() {
                 callback(null) // Error al obtener los datos
             }
     }
+
 }

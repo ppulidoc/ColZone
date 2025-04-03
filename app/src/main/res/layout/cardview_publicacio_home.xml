@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/imatgeProducte"
-            android:layout_width="360dp"
-            android:layout_height="360dp"
+            android:layout_width="399dp"
+            android:layout_height="255dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:textSize="20sp"

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.paudam.colzone.R
 import com.paudam.colzone.BodyApp.Publicacion
 
@@ -21,6 +22,7 @@ class PublicacionAdapter(
         val btnEnviarComentario: ImageView = view.findViewById(R.id.imageView2)
         val textComentario1: TextView = view.findViewById(R.id.textComentario1)
         val textComentario2: TextView = view.findViewById(R.id.textComentario2)
+        val imatgeProducte: ImageView = view.findViewById(R.id.imatgeProducte) // ImageView para la imagen
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicacionViewHolder {
@@ -35,6 +37,11 @@ class PublicacionAdapter(
         holder.textViewUserName.text = publicacion.userName
         holder.textViewTitle.text = publicacion.title
         holder.ratingBar.rating = publicacion.rank.toFloat()
+
+        // Cargar imagen con Glide en imatgeProducte
+        Glide.with(holder.itemView.context)
+            .load(publicacion.imageUrl) // Asegúrate de que cada publicación tiene un imageUrl
+            .into(holder.imatgeProducte)
 
         // Listener para clic en el item
         holder.itemView.setOnClickListener {
