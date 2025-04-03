@@ -35,7 +35,34 @@ class CrearPublicacionFragment : Fragment() {
         // Inicializar Firestore
         db = FirebaseFirestore.getInstance()
 
+
+        // ------------------------------------------------------
+        // Agafar usuariactual
+        var userActual = ""
+
+        userActual = sharedViewModel.userActual.toString()
+
+        var userName="";
+
+        //Obtenir dades user
+        sharedViewModel.obtenirUsername(db, userActual) { name ->
+            userName = name.toString()
+        }
+        //----------------------------------------------------
+
         binding.buttonConfirmar.setOnClickListener(){
+            // Obtener valores del formulario
+
+            val textTitle = binding.editTextTextMultiLine.text.toString().trim()
+            val rank = 5 // Puedes cambiar esto para obtenerlo dinámicamente
+
+            // Generar timestamp actual para commentsId
+            val commentsId = com.google.firebase.Timestamp.now()
+
+            // Llamar a la función insertPublicacion con los parámetros adecuados
+            crearPublicacionVM.insertPublicacion(db, userName, textTitle, rank, commentsId, requireContext())
+
+            // Navegar a la pantalla de perfil después de guardar la publicación
             findNavController().navigate(R.id.action_crearPublicacionFragment_to_perfilGeneralFragment)
         }
 
