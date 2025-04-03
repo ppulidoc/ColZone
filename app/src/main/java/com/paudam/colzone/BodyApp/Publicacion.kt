@@ -9,5 +9,5 @@ data class Publicacion(
     val rank: Int = 0,
     val commentsId: Timestamp? = null,
     val date: Timestamp = Timestamp.now(),
-    val imageUrl: String = "https://via.placeholder.com/300" // URL de la imagen asociada
+    val imageUrl: String = "default_example.webp"
 )

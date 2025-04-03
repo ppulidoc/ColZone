@@ -22,7 +22,7 @@ class PublicacionAdapter(
         val btnEnviarComentario: ImageView = view.findViewById(R.id.imageView2)
         val textComentario1: TextView = view.findViewById(R.id.textComentario1)
         val textComentario2: TextView = view.findViewById(R.id.textComentario2)
-        val imatgeProducte: ImageView = view.findViewById(R.id.imatgeProducte) // ImageView para la imagen
+        val imageViewProducte: ImageView = view.findViewById(R.id.imatgeProducte) // Imagen del producto
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicacionViewHolder {
@@ -38,10 +38,19 @@ class PublicacionAdapter(
         holder.textViewTitle.text = publicacion.title
         holder.ratingBar.rating = publicacion.rank.toFloat()
 
-        // Cargar imagen con Glide en imatgeProducte
-        Glide.with(holder.itemView.context)
-            .load(publicacion.imageUrl) // Asegúrate de que cada publicación tiene un imageUrl
-            .into(holder.imatgeProducte)
+        // Cargar imagen con Glide
+        val defaultImage = R.drawable.default_example // Imagen local en res/drawable
+        val imageUrl = publicacion.imageUrl
+
+        if (imageUrl.isNotEmpty()) {
+            Glide.with(holder.itemView.context)
+                .load(imageUrl) // Carga desde URL
+                .placeholder(defaultImage) // Imagen mientras carga
+                .error(defaultImage) // Imagen en caso de error
+                .into(holder.imageViewProducte)
+        } else {
+            holder.imageViewProducte.setImageResource(defaultImage) // Usa la imagen predeterminada
+        }
 
         // Listener para clic en el item
         holder.itemView.setOnClickListener {
