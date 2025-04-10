@@ -2,13 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
     <LinearLayout
         android:id="@+id/linearId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="547dp"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -16,16 +16,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/textViewNomLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="10dp"
+                android:layout_weight="1"
                 android:text="Nombre Usuario"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -36,8 +36,7 @@
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Añadir a favoritos"
-                android:src="@drawable/ic_favorite_border"
-                />
+                android:src="@drawable/ic_favorite_border" />
         </LinearLayout>
 
         <!-- IMAGEN DE LA PUBLICACIÓN -->
@@ -60,9 +59,9 @@
                 android:id="@+id/textNomPublicacio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -87,8 +86,8 @@
                 android:id="@+id/editTextComentarios"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="10dp"
+                android:layout_weight="1"
                 android:hint="Entra un comentario"
                 android:inputType="text"
                 android:textSize="14dp" />

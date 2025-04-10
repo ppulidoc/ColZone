@@ -53,9 +53,9 @@ xmlns:tools="http://schemas.android.com/tools">
             android:id="@+id/recyclerViewPublicaciones"
             android:layout_width="423dp"
             android:layout_height="737dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="128dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
