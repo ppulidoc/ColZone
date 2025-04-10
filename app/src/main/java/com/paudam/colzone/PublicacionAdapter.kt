@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.R
 import com.paudam.colzone.BodyApp.Publicacion
-import kotlin.math.log
 
 class PublicacionAdapter(
     private var publicacionesList: MutableList<Publicacion>,
@@ -25,7 +26,7 @@ class PublicacionAdapter(
         val btnEnviarComentario: ImageView = view.findViewById(R.id.imageView2)
         val textComentario1: TextView = view.findViewById(R.id.textComentario1)
         val textComentario2: TextView = view.findViewById(R.id.textComentario2)
-        val imageViewProducte: ImageView = view.findViewById(R.id.imatgeProducte) // Imagen del producto
+        val imageViewProducte: ImageView = view.findViewById(R.id.imatgeProducte)
         val btnFavorito: ImageButton = view.findViewById(R.id.btnFavorito)
     }
 
@@ -43,17 +44,17 @@ class PublicacionAdapter(
         holder.ratingBar.rating = publicacion.rank.toFloat()
 
         // Cargar imagen con Glide
-        val defaultImage = R.drawable.default_example // Imagen local en res/drawable
+        val defaultImage = R.drawable.default_example
         val imageUrl = publicacion.imageUrl
 
         if (imageUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context)
-                .load(imageUrl) // Carga desde URL
-                .placeholder(defaultImage) // Imagen mientras carga
-                .error(defaultImage) // Imagen en caso de error
+                .load(imageUrl)
+                .placeholder(defaultImage)
+                .error(defaultImage)
                 .into(holder.imageViewProducte)
         } else {
-            holder.imageViewProducte.setImageResource(defaultImage) // Usa la imagen predeterminada
+            holder.imageViewProducte.setImageResource(defaultImage)
         }
 
         // Listener para clic en el item
@@ -73,39 +74,66 @@ class PublicacionAdapter(
 
         // Listener para el botón de favorito
         holder.btnFavorito.setOnClickListener {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            currentUser?.let { user ->
+                val db = FirebaseFirestore.getInstance()
+                val publiRef = db.collection("publicaciones").document(publicacion.publiId)
+                val userDocRef = db.collection("Users").document(user.uid)
 
-            // Alternar el estado de "favs"
-            val newFavsState = !publicacion.favs // Si es true, pasa a false, si es false, pasa a true
+                // Verificar si la publicación ya está en los favoritos del usuario
+                userDocRef.get().addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val favoritos = document.get("favoritos") as? List<String> ?: emptyList()
+                        val isFavorite = favoritos.contains(publicacion.publiId)
 
-            // Crear una nueva publicación con el estado de "favs" actualizado
-            val updatedPublicacion = publicacion.copy(favs = newFavsState)
-
-            // Obtener referencia a Firestore
-            val db = FirebaseFirestore.getInstance()
-            val publiRef = db.collection("publicaciones").document(publicacion.publiId)
-
-            // Actualizar el campo "favs" en Firestore
-            publiRef.update("favs", newFavsState)
-                .addOnSuccessListener {
-                    // Cambiar el ícono dependiendo del nuevo estado de "favs"
-                    if (newFavsState) {
-                        // Si "favs" es true, mostrar el ícono de favorito marcado
-                        holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border_liked) // Ícono de favorito marcado
-                    } else {
-                        // Si "favs" es false, mostrar el ícono de favorito sin marcar
-                        holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border) // Ícono de favorito no marcado
+                        if (isFavorite) {
+                            // Eliminar de favoritos
+                            userDocRef.update("favoritos", FieldValue.arrayRemove(publicacion.publiId))
+                                .addOnSuccessListener {
+                                    // Actualizar el ícono y el estado de la publicación
+                                    holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border)
+                                    publicacion.favs = false
+                                    Toast.makeText(holder.itemView.context, "Publicación eliminada de favoritos", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Favoritos", "Error al eliminar de favoritos", e)
+                                    Toast.makeText(holder.itemView.context, "Error al eliminar de favoritos", Toast.LENGTH_SHORT).show()
+                                }
+                        } else {
+                            // Agregar a favoritos
+                            userDocRef.update("favoritos", FieldValue.arrayUnion(publicacion.publiId))
+                                .addOnSuccessListener {
+                                    // Actualizar el ícono y el estado de la publicación
+                                    holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border_liked)
+                                    publicacion.favs = true
+                                    Toast.makeText(holder.itemView.context, "Publicación agregada a favoritos", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Favoritos", "Error al agregar a favoritos", e)
+                                    Toast.makeText(holder.itemView.context, "Error al agregar a favoritos", Toast.LENGTH_SHORT).show()
+                                }
+                        }
                     }
-
-                    publicacion.favs = newFavsState;
-                    // Mostrar un mensaje de éxito
-                    Toast.makeText(holder.itemView.context, "Estado de favorito actualizado", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener { e ->
-                    // Manejo de error si la actualización falla
-                    Toast.makeText(holder.itemView.context, "Error al actualizar el estado de favorito", Toast.LENGTH_SHORT).show()
-                }
+            }
         }
 
+        // Establecer el estado inicial del botón de favorito según los favoritos del usuario
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        currentUser?.let { user ->
+            val db = FirebaseFirestore.getInstance()
+            val userDocRef = db.collection("Users").document(user.uid)
+
+            userDocRef.get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val favoritos = document.get("favoritos") as? List<String> ?: emptyList()
+                    val isFavorite = favoritos.contains(publicacion.publiId)
+                    publicacion.favs = isFavorite
+                    val iconRes = if (isFavorite) R.drawable.ic_favorite_border_liked else R.drawable.ic_favorite_border
+                    holder.btnFavorito.setImageResource(iconRes)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = publicacionesList.size
