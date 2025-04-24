@@ -1,6 +1,7 @@
 package com.paudam.colzone.BodyApp.Buscador
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,6 @@ class BuscadorFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var usersAdapter: UsersAdapter
     private var userList = mutableListOf<User>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,24 +31,35 @@ class BuscadorFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_buscador, container, false)
         db = FirebaseFirestore.getInstance()
 
-        // Inicializar el adapter
         usersAdapter = UsersAdapter(userList) { user ->
-            // Aquí podrías pasar a detalles o lo que quieras hacer al click
+            // Acción al hacer clic en un usuario (si quieres abrir perfil, etc.)
         }
 
-        // Configurar RecyclerView
         binding.recyclerViewUsers.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = usersAdapter
         }
 
-        // Cargar usuarios desde Firestore
-        loadUsersFromFirestore()
+        // 🔍 Lógica para buscar
+        binding.searchText.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString().trim()
+                if (query.isNotEmpty()) {
+                    loadUsersFromFirestore(query)
+                } else {
+                    userList.clear()
+                    usersAdapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
 
         return binding.root
     }
 
-    private fun loadUsersFromFirestore() {
+    private fun loadUsersFromFirestore(filter: String) {
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
 
         db.collection("Users")
@@ -57,25 +68,26 @@ class BuscadorFragment : Fragment() {
                 userList.clear()
                 for (document in result) {
                     val uid = document.id
-                    // Evitar mostrar al usuario actual
                     if (uid != currentUserUid) {
                         val name = document.getString("name") ?: ""
                         val email = document.getString("email") ?: ""
                         val imageUrl = document.getString("imageUrl") ?: "user_icon_free.png"
 
-                        val user = User(
-                            userId = uid,
-                            name = name,
-                            email = email,
-                            imageUrl = imageUrl
-                        )
-                        userList.add(user)
+                        if (name.contains(filter, ignoreCase = true)) {
+                            val user = User(
+                                userId = uid,
+                                name = name,
+                                email = email,
+                                imageUrl = imageUrl
+                            )
+                            userList.add(user)
+                        }
                     }
                 }
                 usersAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
-                // Log o mensaje de error si quieres
+                Log.e("Firestore", "Error al buscar usuarios", it)
             }
     }
 }
