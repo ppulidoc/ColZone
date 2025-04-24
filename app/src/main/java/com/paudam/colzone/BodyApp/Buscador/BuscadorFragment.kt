@@ -15,6 +15,7 @@ import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.BodyApp.User
 import com.paudam.colzone.R
 import com.paudam.colzone.adapter.UsersAdapter
+import com.paudam.colzone.adapter.UsersAdapterSugerencia
 import com.paudam.colzone.databinding.FragmentBuscadorBinding
 
 class BuscadorFragment : Fragment() {
@@ -23,7 +24,10 @@ class BuscadorFragment : Fragment() {
     private val sharedViewModel: SharedVM by activityViewModels()
     private lateinit var db: FirebaseFirestore
     private lateinit var usersAdapter: UsersAdapter
+    private lateinit var usersAdapterSugerencia: UsersAdapterSugerencia
+
     private var userList = mutableListOf<User>()
+    private var userListSuggest = mutableListOf<User>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +44,22 @@ class BuscadorFragment : Fragment() {
             adapter = usersAdapter
         }
 
-        // 🔍 Lógica para buscar
+
+        usersAdapterSugerencia = UsersAdapterSugerencia(userListSuggest) { user ->
+            // Acción al hacer clic en un usuario (si quieres abrir perfil, etc.)
+        }
+
+        binding.recyclerViewUsersGlobal.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = usersAdapterSugerencia
+        }
+
+        loadUsersFromFirestoreSuggest()
+
+
+
+
+
         binding.searchText.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -85,6 +104,42 @@ class BuscadorFragment : Fragment() {
                     }
                 }
                 usersAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {
+                Log.e("Firestore", "Error al buscar usuarios", it)
+            }
+    }
+
+    private fun loadUsersFromFirestoreSuggest() {
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+
+        db.collection("Users")
+            .get()
+            .addOnSuccessListener { result ->
+                val allUsers = mutableListOf<User>()
+
+                for (document in result) {
+                    val uid = document.id
+                    if (uid != currentUserUid) {
+                        val name = document.getString("name") ?: ""
+                        val email = document.getString("email") ?: ""
+                        val imageUrl = document.getString("imageUrl") ?: "user_icon_free.png"
+
+                        val user = User(
+                            userId = uid,
+                            name = name,
+                            email = email,
+                            imageUrl = imageUrl
+                        )
+                        allUsers.add(user)
+                    }
+                }
+
+                // Elegir 2 usuarios aleatorios
+                userListSuggest.clear()
+                userListSuggest.addAll(allUsers.shuffled().take(2))
+
+                usersAdapterSugerencia.notifyDataSetChanged()
             }
             .addOnFailureListener {
                 Log.e("Firestore", "Error al buscar usuarios", it)
