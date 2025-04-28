@@ -11,6 +11,7 @@ class CrearPublicacionVM: ViewModel() {
     fun insertPublicacion(
         db: FirebaseFirestore,
         userName: String,
+        userId: String,
         title: String,
         rank: Int,
         commentsId: Timestamp,
@@ -21,6 +22,7 @@ class CrearPublicacionVM: ViewModel() {
         val publiData = hashMapOf(
             "publiId" to publiRef.id, // Usamos el ID del documento como publiId
             "userName" to userName,
+            "userId" to userId,
             "title" to title,
             "rank" to rank,
             "favs" to false,

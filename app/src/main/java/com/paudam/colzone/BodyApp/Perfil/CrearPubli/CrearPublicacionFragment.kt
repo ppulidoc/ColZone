@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.BodyApp.Perfil.PerfilGeneralVM
 import com.paudam.colzone.BodyApp.SharedVM
@@ -58,9 +59,10 @@ class CrearPublicacionFragment : Fragment() {
 
             // Generar timestamp actual para commentsId
             val commentsId = com.google.firebase.Timestamp.now()
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
 
             // Llamar a la función insertPublicacion con los parámetros adecuados
-            crearPublicacionVM.insertPublicacion(db, userName, textTitle, rank, commentsId, requireContext())
+            crearPublicacionVM.insertPublicacion(db, userName,userId.toString(), textTitle, rank, commentsId, requireContext())
 
             // Navegar a la pantalla de perfil después de guardar la publicación
             findNavController().navigate(R.id.action_crearPublicacionFragment_to_perfilGeneralFragment)
