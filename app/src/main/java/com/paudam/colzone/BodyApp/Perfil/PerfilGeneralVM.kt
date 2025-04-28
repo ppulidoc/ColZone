@@ -24,5 +24,26 @@ class PerfilGeneralVM: ViewModel() {
             }
     }
 
+    fun contarFollows(db: FirebaseFirestore, userActual: String, callback: (Int?) -> Unit) {
+        db.collection("Users")
+            .document(userActual)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val seguidos = document.get("seguidos") as? List<String> ?: emptyList()
+                    // Devolver el tamaño de la lista 'seguidos'
+                    callback(seguidos.size)
+                } else {
+                    // Si no se encuentra el usuario
+                    callback(0)
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Si ocurre un error
+                callback(null)
+            }
+    }
+
+
 
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.R
@@ -44,6 +45,13 @@ class PerfilGeneralFragment : Fragment() {
         perfilGeneralVM.obtenirUsername(db, userActual) { name ->
             var userName = name
             binding.textViewUsername.text = name ?: "Usuario no encontrado"
+        }
+        val userActualId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userActualId != null) {
+            perfilGeneralVM.contarFollows(db,userActualId){ numFollows ->
+                var numFollows = numFollows
+                binding.textViewNumFolows.text = numFollows.toString() ?: "0"
+            }
         }
 
         binding.addPubliButton.setOnClickListener(){

@@ -36,6 +36,34 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.363" />
 
+        <TextView
+            android:id="@+id/textViewFollows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sigues :"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.352"
+            app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
+            app:layout_constraintVertical_bias="0.47" />
+
+        <TextView
+            android:id="@+id/textViewNumFolows"
+            android:layout_width="72dp"
+            android:layout_height="24dp"
+            android:text="0"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintStart_toEndOf="@+id/textViewFollows"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
+            app:layout_constraintVertical_bias="0.47" />
+
         <ImageButton
             android:id="@+id/imageButtonChats"
             android:layout_width="38dp"
