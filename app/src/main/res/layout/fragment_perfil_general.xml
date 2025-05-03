@@ -105,6 +105,8 @@
             android:id="@+id/imageViewProfile"
             android:layout_width="120dp"
             android:layout_height="112dp"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toStartOf="@+id/textViewUsername"
             app:layout_constraintHorizontal_bias="0.506"

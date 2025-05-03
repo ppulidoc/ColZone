@@ -56,6 +56,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-analytics:21.5.1")
     implementation("com.google.firebase:firebase-firestore:25.1.2")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
 
     //DEPENDENCIES A MÀ PER A ROOM
     implementation("androidx.room:room-runtime:2.6.1")
@@ -68,7 +69,9 @@ dependencies {
 
     /* GLIDE */
 
+    // Glide (con KSP)
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    ksp("com.github.bumptech.glide:ksp:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
 
