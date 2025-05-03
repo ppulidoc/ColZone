@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.paudam.colzone.BodyApp.SharedVM
+import com.paudam.colzone.InicioSesion.Login.InicioSesionLoginActivity
 import com.paudam.colzone.R
 import com.paudam.colzone.databinding.FragmentPerfilGeneralBinding
 
@@ -70,6 +71,16 @@ class PerfilGeneralFragment : Fragment() {
                 binding.textViewNumFolows.text = numFollows.toString()
             }
         }
+
+        binding.imageButtonLogOut.setOnClickListener {
+            // Cerrar la actividad actual (que es la actividad del perfil)
+            requireActivity().finish()
+
+            // Crear un Intent para iniciar la actividad de Inicio de Sesión
+            val intent = Intent(requireContext(), InicioSesionLoginActivity::class.java) // Sustituye LoginActivity con el nombre de tu actividad de inicio de sesión
+            startActivity(intent)  // Inicia la actividad de Inicio de Sesión
+        }
+
 
         // Navegar a crear publicación
         binding.addPubliButton.setOnClickListener {

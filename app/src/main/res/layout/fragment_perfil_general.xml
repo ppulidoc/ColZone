@@ -16,11 +16,23 @@
             android:layout_height="36dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.212"
+            app:layout_constraintHorizontal_bias="0.169"
             app:layout_constraintStart_toEndOf="@+id/imageButtonChats"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.322"
             app:srcCompat="@drawable/adduser" />
+
+        <ImageButton
+            android:id="@+id/imageButtonLogOut"
+            android:layout_width="38dp"
+            android:layout_height="36dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.78"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonChats"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.322"
+            app:srcCompat="@drawable/baseline_logout_24" />
 
         <TextView
             android:id="@+id/textViewUsername"
@@ -31,7 +43,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.599"
+            app:layout_constraintHorizontal_bias="0.55"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.363" />
@@ -45,10 +57,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.352"
+            app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
             app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
-            app:layout_constraintVertical_bias="0.47" />
+            app:layout_constraintVertical_bias="0.343" />
 
         <TextView
             android:id="@+id/textViewNumFolows"
@@ -59,16 +71,16 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintHorizontal_bias="0.043"
             app:layout_constraintStart_toEndOf="@+id/textViewFollows"
             app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
-            app:layout_constraintVertical_bias="0.47" />
+            app:layout_constraintVertical_bias="0.343" />
 
         <ImageButton
             android:id="@+id/imageButtonChats"
             android:layout_width="38dp"
             android:layout_height="36dp"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintStart_toEndOf="@+id/textViewUsername"
             app:layout_constraintTop_toTopOf="parent"
