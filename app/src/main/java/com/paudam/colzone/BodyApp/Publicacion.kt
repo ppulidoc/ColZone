@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp
 data class Publicacion(
     val publiId: String = "",
     val userName: String = "",
+    val userId: String = "",
     val title: String = "",
     val rank: Int = 0,
     var favs: Boolean = false,

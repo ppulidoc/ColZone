@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
             adapter = publiAdapter
         }
 
-        // Llamar a la función para obtener publicaciones
+        // Obtener publicaciones
         obtenerPublicaciones()
 
         return binding.root
@@ -56,7 +56,6 @@ class HomeFragment : Fragment() {
     private fun obtenerPublicaciones() {
         val userActualId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // Imprimir log para verificar el UID del usuario actual
         Log.d("HomeFragment", "UID actual: $userActualId")
 
         db.collection("Users").document(userActualId)
@@ -64,18 +63,14 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     val seguidos = document.get("seguidos") as? List<String> ?: emptyList()
-
-                    // Imprimir log para verificar los seguidos del usuario actual
                     Log.d("HomeFragment", "Seguidos: $seguidos")
 
                     if (seguidos.isEmpty()) {
-                        // Si no sigue a nadie, limpiamos la lista
                         publiList.clear()
                         publiAdapter.notifyDataSetChanged()
                         return@addOnSuccessListener
                     }
 
-                    // Aquí manejamos las consultas para los seguidos
                     db.collection("publicaciones")
                         .whereIn("userId", seguidos)
                         .orderBy("date", Query.Direction.DESCENDING)
@@ -89,24 +84,28 @@ class HomeFragment : Fragment() {
 
                             publiList.clear()
                             for (document in documents) {
-                                val publicacion = document.toObject(Publicacion::class.java)
+                                val publicacion = Publicacion(
+                                    publiId = document.id,
+                                    userName = document.getString("userName") ?: "",
+                                    userId = document.getString("userId") ?: "",
+                                    title = document.getString("title") ?: "",
+                                    rank = document.getLong("rank")?.toInt() ?: 0,
+                                    favs = false,
+                                    imageUrl = document.getString("imageUrl") ?: ""
+                                )
                                 Log.d("HomeFragment", "Publicación: $publicacion")
                                 publiList.add(publicacion)
                             }
-                            // Actualizar el RecyclerView
                             publiAdapter.notifyDataSetChanged()
                         }
                         .addOnFailureListener { e ->
-                            // Imprimir log si ocurre un error al obtener las publicaciones
                             Log.e("HomeFragment", "Error al obtener publicaciones filtradas: $e")
                         }
                 } else {
-                    // Si el documento del usuario actual no existe
                     Log.e("HomeFragment", "El documento del usuario actual no existe.")
                 }
             }
             .addOnFailureListener { e ->
-                // Imprimir log si ocurre un error al obtener los seguidos del usuario
                 Log.e("HomeFragment", "Error al obtener seguidos del usuario actual: $e")
             }
     }

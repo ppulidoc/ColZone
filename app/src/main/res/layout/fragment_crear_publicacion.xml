@@ -40,7 +40,7 @@
                 android:id="@+id/textViewImagen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="76dp"
+                android:layout_marginTop="44dp"
                 android:text="Insertar Imagen"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -78,9 +78,9 @@
 
             <EditText
                 android:id="@+id/editTextTextMultiLine"
-                android:layout_width="380dp"
-                android:layout_height="151dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="378dp"
+                android:layout_height="63dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="Ejemplo: Aizawa MHA golden edition.."
                 android:inputType="textMultiLine"
@@ -88,41 +88,15 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
-
-            <TextView
-                android:id="@+id/textViewPublicar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="Publicar"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editTextTextMultiLine" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Activar   "
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewPublicar"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <Button
                 android:id="@+id/buttonConfirmar"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="76dp"
+                android:layout_marginTop="56dp"
                 android:backgroundTint="@color/red"
                 android:text="CREAR"
                 android:textColor="@android:color/white"
@@ -130,7 +104,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/switch1" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

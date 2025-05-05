@@ -71,6 +71,7 @@ dependencies {
 
     // Glide (con KSP)
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.firebase.storage.ktx)
     ksp("com.github.bumptech.glide:ksp:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 

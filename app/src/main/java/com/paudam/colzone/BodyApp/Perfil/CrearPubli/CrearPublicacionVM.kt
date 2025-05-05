@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 
-class CrearPublicacionVM: ViewModel() {
+class CrearPublicacionVM : ViewModel() {
 
     fun insertPublicacion(
         db: FirebaseFirestore,
@@ -15,22 +15,23 @@ class CrearPublicacionVM: ViewModel() {
         title: String,
         rank: Int,
         commentsId: Timestamp,
+        imageUrl: String,
+        publiId: String,
         context: Context
     ) {
-        val publiRef = db.collection("publicaciones").document() // Genera un ID único
-
         val publiData = hashMapOf(
-            "publiId" to publiRef.id, // Usamos el ID del documento como publiId
+            "publiId" to publiId,
             "userName" to userName,
             "userId" to userId,
             "title" to title,
             "rank" to rank,
             "favs" to false,
             "commentsId" to commentsId,
-            "date" to Timestamp.now() // Guardamos la fecha actual
+            "date" to Timestamp.now(),
+            "imageUrl" to imageUrl
         )
 
-        publiRef.set(publiData)
+        db.collection("publicaciones").document(publiId).set(publiData)
             .addOnSuccessListener {
                 Toast.makeText(context, "Publicación creada exitosamente", Toast.LENGTH_SHORT).show()
             }
@@ -38,5 +39,4 @@ class CrearPublicacionVM: ViewModel() {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
 }
