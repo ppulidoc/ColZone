@@ -97,7 +97,7 @@ class PerfilGeneralFragment : Fragment() {
         loadProfileImage()
 
         // Asignar el LayoutManager con GridLayoutManager (3 columnas)
-        binding.recyclerViewPublicacionesPerfil.layoutManager = GridLayoutManager(requireContext(), 3)  // 3 columnas
+        binding.recyclerViewPublicacionesPerfil.layoutManager = GridLayoutManager(requireContext(), 2)  // 3 columnas
 
         // Obtener las publicaciones del usuario actual
         userActualId?.let { uid ->

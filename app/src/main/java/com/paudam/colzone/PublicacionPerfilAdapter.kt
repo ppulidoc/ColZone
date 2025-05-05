@@ -1,15 +1,12 @@
 package com.paudam.colzone.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.R
 import com.paudam.colzone.BodyApp.Publicacion
 
@@ -19,14 +16,14 @@ class PublicacionPerfilAdapter(
 ) : RecyclerView.Adapter<PublicacionPerfilAdapter.PublicacionViewHolder>() {
 
     class PublicacionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val imageViewProducte: ImageView = view.findViewById(R.id.imatgeProducte)
+        val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicacionViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.cardview_publicacio_perfil, parent, false)// cambiar cardview
+            .inflate(R.layout.cardview_publicacio_perfil, parent, false)
         return PublicacionViewHolder(view)
     }
 
@@ -46,6 +43,11 @@ class PublicacionPerfilAdapter(
             holder.imageViewProducte.setImageResource(defaultImage)
         }
 
+        // Mostrar título de la publicación (si existe)
+        holder.textViewTitle.text = publicacion.title ?: "Sin título"
+
+
+
         // Listener para clic en el item
         holder.itemView.setOnClickListener {
             itemClickListener(publicacion)
@@ -59,5 +61,4 @@ class PublicacionPerfilAdapter(
         publicacionesList.addAll(newList)
         notifyDataSetChanged()
     }
-
 }
