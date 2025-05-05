@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -9,123 +8,128 @@
         android:layout_height="match_parent"
         tools:context=".BodyApp.Perfil.PerfilGeneralFragment">
 
+        <!-- Imagen de perfil -->
 
-        <ImageButton
-            android:id="@+id/imageButtonAddUser"
-            android:layout_width="38dp"
-            android:layout_height="36dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        <!-- Nombre de usuario -->
+        <ImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="139dp"
+            android:layout_height="139dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="16dp"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_account_circle_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.169"
-            app:layout_constraintStart_toEndOf="@+id/imageButtonChats"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.322"
-            app:srcCompat="@drawable/adduser" />
-
-        <ImageButton
-            android:id="@+id/imageButtonLogOut"
-            android:layout_width="38dp"
-            android:layout_height="36dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.78"
-            app:layout_constraintStart_toEndOf="@+id/imageButtonChats"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.322"
-            app:srcCompat="@drawable/baseline_logout_24" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="username"
-            android:textSize="18dp"
+            android:text="Username"
+            android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.55"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/imageViewProfile"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.363" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
 
-        <TextView
-            android:id="@+id/textViewFollows"
+        <!-- Sección de seguidores -->
+        <LinearLayout
+            android:id="@+id/followInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sigues :"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/textViewUsername"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.26"
-            app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-            app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
-            app:layout_constraintVertical_bias="0.343" />
+            android:layout_marginTop="8dp"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/textViewNumFolows"
-            android:layout_width="72dp"
-            android:layout_height="24dp"
-            android:text="0"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            <TextView
+                android:id="@+id/textViewFollows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sigues: "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textViewNumFolows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Botones de acciones: chats, añadir usuario, logout -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/followInfo"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
-            app:layout_constraintStart_toEndOf="@+id/textViewFollows"
-            app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
-            app:layout_constraintVertical_bias="0.343" />
+            android:layout_marginTop="16dp">
 
-        <ImageButton
-            android:id="@+id/imageButtonChats"
-            android:layout_width="38dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintStart_toEndOf="@+id/textViewUsername"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.322"
-            app:srcCompat="@drawable/message" />
--
+            <ImageButton
+                android:id="@+id/imageButtonChats"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/message"
+                android:contentDescription="Chats"/>
+
+            <ImageButton
+                android:id="@+id/imageButtonAddUser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/adduser"
+                android:layout_marginStart="24dp"
+                android:contentDescription="Add user"/>
+
+            <ImageButton
+                android:id="@+id/imageButtonLogOut"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/baseline_logout_24"
+                android:layout_marginStart="24dp"
+                android:contentDescription="Log out"/>
+        </LinearLayout>
+
+        <!-- Sección principal -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="775dp"
+            android:layout_width="467dp"
+            android:layout_height="634dp"
             android:background="@color/gris"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.571"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            tools:context=".BodyApp.Perfil.PerfilGeneralFragment">
-
+            app:layout_constraintTop_toBottomOf="@id/imageButtonLogOut"
+            tools:ignore="NotSibling">
 
             <ImageButton
                 android:id="@+id/addPubliButton"
                 android:layout_width="113dp"
                 android:layout_height="111dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.111"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/add_publi" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/imageViewProfile"
-            android:layout_width="120dp"
-            android:layout_height="112dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toStartOf="@+id/textViewUsername"
-            app:layout_constraintHorizontal_bias="0.506"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.506"
-            app:srcCompat="@drawable/baseline_account_circle_24" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
