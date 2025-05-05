@@ -15,10 +15,10 @@
         android:icon="@drawable/homeicon2"
         android:title="Inicio" />
 
-    <item
+    <!--<item
         android:id="@+id/chatsGeneralFragment"
         android:icon="@drawable/mssg"
-        android:title="Chats" />
+        android:title="Chats" />-->
 
     <item
         android:id="@+id/perfilGeneralFragment"
