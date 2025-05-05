@@ -14,13 +14,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager  // Asegúrate de importar GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.paudam.colzone.BodyApp.Publicacion
 import com.paudam.colzone.BodyApp.SharedVM
 import com.paudam.colzone.InicioSesion.Login.InicioSesionLoginActivity
 import com.paudam.colzone.R
+import com.paudam.colzone.adapter.PublicacionPerfilAdapter
 import com.paudam.colzone.databinding.FragmentPerfilGeneralBinding
 
 class PerfilGeneralFragment : Fragment() {
@@ -30,6 +33,7 @@ class PerfilGeneralFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
     private var userActualId: String? = null
+    private lateinit var adapter: PublicacionPerfilAdapter
 
     private lateinit var perfilGeneralVM: PerfilGeneralVM  // ViewModel
 
@@ -56,7 +60,7 @@ class PerfilGeneralFragment : Fragment() {
 
         perfilGeneralVM = ViewModelProvider(this).get(PerfilGeneralVM::class.java)
 
-        // Obtención de userActualId
+        // Obtención del userActualId
         val userActual = sharedViewModel.userActual.toString()
         userActualId = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -73,14 +77,10 @@ class PerfilGeneralFragment : Fragment() {
         }
 
         binding.imageButtonLogOut.setOnClickListener {
-            // Cerrar la actividad actual (que es la actividad del perfil)
             requireActivity().finish()
-
-            // Crear un Intent para iniciar la actividad de Inicio de Sesión
-            val intent = Intent(requireContext(), InicioSesionLoginActivity::class.java) // Sustituye LoginActivity con el nombre de tu actividad de inicio de sesión
-            startActivity(intent)  // Inicia la actividad de Inicio de Sesión
+            val intent = Intent(requireContext(), InicioSesionLoginActivity::class.java)
+            startActivity(intent)
         }
-
 
         // Navegar a crear publicación
         binding.addPubliButton.setOnClickListener {
@@ -96,6 +96,32 @@ class PerfilGeneralFragment : Fragment() {
         // Cargar imagen de perfil al inicio
         loadProfileImage()
 
+        // Asignar el LayoutManager con GridLayoutManager (3 columnas)
+        binding.recyclerViewPublicacionesPerfil.layoutManager = GridLayoutManager(requireContext(), 3)  // 3 columnas
+
+        // Obtener las publicaciones del usuario actual
+        userActualId?.let { uid ->
+            db.collection("publicaciones")
+                .whereEqualTo("userId", uid)  // Filtramos por el ID del usuario actual
+                .get()
+                .addOnSuccessListener { result ->
+                    val publicaciones = mutableListOf<Publicacion>()
+                    for (document in result) {
+                        val publicacion = document.toObject(Publicacion::class.java)
+                        publicaciones.add(publicacion)
+                    }
+
+                    // Pasar directamente la lista de publicaciones al adaptador
+                    adapter = PublicacionPerfilAdapter(publicaciones) { publicacion ->
+                        // Manejar el clic en la publicación
+                    }
+                    binding.recyclerViewPublicacionesPerfil.adapter = adapter
+                }
+                .addOnFailureListener { exception ->
+                    // Manejo de error si no se puede obtener las publicaciones
+                }
+        }
+
         return binding.root
     }
 
@@ -106,11 +132,9 @@ class PerfilGeneralFragment : Fragment() {
         storageRef.putFile(imageUri)
             .addOnSuccessListener {
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    // Guardamos la URL de la imagen en Firestore
                     db.collection("Users").document(uid)
                         .update("profileImageUrl", uri.toString())
                         .addOnSuccessListener {
-                            // Después de guardar la URL, recargamos la imagen en el perfil
                             loadProfileImage()  // Carga la nueva imagen del perfil
                         }
                         .addOnFailureListener {
@@ -126,20 +150,16 @@ class PerfilGeneralFragment : Fragment() {
     private fun loadProfileImage() {
         val uid = userActualId ?: return
 
-        // Recuperar la URL de la imagen desde Firestore
         db.collection("Users").document(uid).get()
             .addOnSuccessListener { document ->
-                val imageUrl = document.getString("profileImageUrl")  // Recuperamos la URL de la imagen
-
+                val imageUrl = document.getString("profileImageUrl")
                 if (!imageUrl.isNullOrEmpty()) {
-                    // Si la URL no está vacía, cargamos la imagen desde Firebase Storage
                     Glide.with(requireContext())
-                        .load(imageUrl)  // Carga la imagen desde la URL obtenida
+                        .load(imageUrl)
                         .into(binding.imageViewProfile)
                 } else {
-                    // Si no hay imagen de perfil, mostramos una imagen por defecto
                     Glide.with(requireContext())
-                        .load(R.drawable.default_profile_image)  // Imagen por defecto
+                        .load(R.drawable.default_profile_image)
                         .into(binding.imageViewProfile)
                 }
             }
