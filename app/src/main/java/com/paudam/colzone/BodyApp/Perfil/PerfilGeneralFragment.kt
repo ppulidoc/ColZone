@@ -1,6 +1,7 @@
 package com.paudam.colzone.BodyApp.Perfil
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,11 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager  // Asegúrate de importar GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -96,8 +98,8 @@ class PerfilGeneralFragment : Fragment() {
         // Cargar imagen de perfil al inicio
         loadProfileImage()
 
-        // Asignar el LayoutManager con GridLayoutManager (3 columnas)
-        binding.recyclerViewPublicacionesPerfil.layoutManager = GridLayoutManager(requireContext(), 2)  // 3 columnas
+        // Asignar el LayoutManager con GridLayoutManager (2 columnas)
+        binding.recyclerViewPublicacionesPerfil.layoutManager = GridLayoutManager(requireContext(), 2)
 
         // Obtener las publicaciones del usuario actual
         userActualId?.let { uid ->
@@ -113,7 +115,7 @@ class PerfilGeneralFragment : Fragment() {
 
                     // Pasar directamente la lista de publicaciones al adaptador
                     adapter = PublicacionPerfilAdapter(publicaciones) { publicacion ->
-                        // Manejar el clic en la publicación
+                        showDeleteDialog(publicacion)
                     }
                     binding.recyclerViewPublicacionesPerfil.adapter = adapter
                 }
@@ -125,9 +127,39 @@ class PerfilGeneralFragment : Fragment() {
         return binding.root
     }
 
+    // Función para mostrar el dialog de confirmación
+    private fun showDeleteDialog(publicacion: Publicacion) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Eliminar Publicación")
+            .setMessage("¿Estás seguro de que deseas eliminar esta publicación?")
+            .setPositiveButton("Eliminar") { dialog: DialogInterface, which: Int ->
+                deletePublication(publicacion.publiId)
+            }
+            .setNegativeButton("Cancelar") { dialog: DialogInterface, which: Int ->
+                dialog.dismiss()  // Cerrar el diálogo sin hacer nada
+            }
+            .create()
+
+        alertDialog.show()
+    }
+
+    // Función para eliminar la publicación de Firestore
+    private fun deletePublication(publicacionId: String) {
+        db.collection("publicaciones").document(publicacionId)
+            .delete()
+            .addOnSuccessListener {
+                // Actualizar la lista de publicaciones después de eliminar
+                val updatedList = adapter.publicacionesList.filter { it.publiId != publicacionId }.toMutableList()
+                adapter.updateList(updatedList)
+            }
+            .addOnFailureListener { exception ->
+                // Manejo de error si no se puede eliminar
+            }
+    }
+
     private fun uploadImageToFirebase(imageUri: Uri) {
         val uid = userActualId ?: return
-        val storageRef = storage.reference.child("profile_images/$uid.jpg")  // Usamos el UID como nombre del archivo
+        val storageRef = storage.reference.child("profile_images/$uid.jpg")
 
         storageRef.putFile(imageUri)
             .addOnSuccessListener {
@@ -135,7 +167,7 @@ class PerfilGeneralFragment : Fragment() {
                     db.collection("Users").document(uid)
                         .update("profileImageUrl", uri.toString())
                         .addOnSuccessListener {
-                            loadProfileImage()  // Carga la nueva imagen del perfil
+                            loadProfileImage()
                         }
                         .addOnFailureListener {
                             // Manejo de errores si no se puede guardar la URL

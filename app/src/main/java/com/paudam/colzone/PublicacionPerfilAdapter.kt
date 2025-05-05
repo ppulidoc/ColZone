@@ -11,7 +11,7 @@ import com.paudam.colzone.R
 import com.paudam.colzone.BodyApp.Publicacion
 
 class PublicacionPerfilAdapter(
-    private var publicacionesList: MutableList<Publicacion>,
+    var publicacionesList: MutableList<Publicacion>,
     private val itemClickListener: (Publicacion) -> Unit
 ) : RecyclerView.Adapter<PublicacionPerfilAdapter.PublicacionViewHolder>() {
 
