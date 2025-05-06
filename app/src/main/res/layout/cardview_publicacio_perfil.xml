@@ -23,7 +23,7 @@
             android:scaleType="centerCrop"
             android:layout_gravity="center"/>
 
-        <!-- Título de la publicación (opcional) -->
+        <!-- Título de la publicación  -->
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
