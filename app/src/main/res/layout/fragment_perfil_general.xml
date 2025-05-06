@@ -69,29 +69,20 @@
         </LinearLayout>
 
         <!-- Botones de acciones: chats, añadir usuario, logout -->
-        <LinearLayout
-            android:layout_width="52dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/followInfo">
-
-        </LinearLayout>
 
         <!-- Sección principal -->
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="467dp"
-            android:layout_height="622dp"
+            android:layout_width="450dp"
+            android:layout_height="565dp"
             android:background="@color/gris"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/followInfo"
+            app:layout_constraintVertical_bias="0.342"
             tools:ignore="NotSibling">
 
             <ImageButton
@@ -109,10 +100,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPublicacionesPerfil"
                 android:layout_width="396dp"
-                android:layout_height="392dp"
-                android:layout_marginTop="104dp"
+                android:layout_height="449dp"
+                android:layout_marginTop="84dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
