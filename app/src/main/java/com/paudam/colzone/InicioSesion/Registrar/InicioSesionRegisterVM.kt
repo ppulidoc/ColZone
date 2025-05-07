@@ -34,8 +34,8 @@ class InicioSesionRegisterVM: ViewModel() {
             .document(user.uid)  // Usamos el UID del usuario como documento
             .set(userData)  // Establecemos los datos en ese documento
             .addOnSuccessListener {
-                Log.d("Firestore", "Usuario agregado exitosamente")
-                Toast.makeText(context, "Usuario agregado a Firestore", Toast.LENGTH_SHORT).show()
+                Log.d("sesion", "Te has registrado exitosamente")
+                Toast.makeText(context, "Te has registrado exitosamente", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 Log.w("Firestore", "Error al agregar usuario", e)
