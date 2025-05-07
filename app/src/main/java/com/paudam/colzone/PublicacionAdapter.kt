@@ -21,7 +21,7 @@ class PublicacionAdapter(
     class PublicacionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewUserName: TextView = view.findViewById(R.id.textViewNomLabel)
         val textViewTitle: TextView = view.findViewById(R.id.textNomPublicacio)
-        val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
+       // val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
         val editTextComentario: EditText = view.findViewById(R.id.editTextComentarios)
         val btnEnviarComentario: ImageView = view.findViewById(R.id.imageView2)
         val textComentario1: TextView = view.findViewById(R.id.textComentario1)
@@ -41,7 +41,7 @@ class PublicacionAdapter(
 
         holder.textViewUserName.text = publicacion.userName
         holder.textViewTitle.text = publicacion.title
-        holder.ratingBar.rating = publicacion.rank.toFloat()
+        //holder.ratingBar.rating = publicacion.rank.toFloat()
 
         // Cargar imagen con Glide
         val defaultImage = R.drawable.default_example

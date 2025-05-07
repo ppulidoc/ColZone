@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.paudam.colzone.R
 import com.paudam.colzone.BodyApp.Publicacion
+import com.paudam.colzone.adapter.PublicacionAdapter.PublicacionViewHolder
 
 class PublicacionFavsAdapter(
     private var publicacionesList: MutableList<Publicacion>,
@@ -21,7 +22,7 @@ class PublicacionFavsAdapter(
     class PublicacionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewUserName: TextView = view.findViewById(R.id.textViewNomLabel)
         val textViewTitle: TextView = view.findViewById(R.id.textNomPublicacio)
-        val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
+       // val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
         val editTextComentario: EditText = view.findViewById(R.id.editTextComentarios)
         val btnEnviarComentario: ImageView = view.findViewById(R.id.imageView2)
         val textComentario1: TextView = view.findViewById(R.id.textComentario1)
@@ -41,7 +42,7 @@ class PublicacionFavsAdapter(
 
         holder.textViewUserName.text = publicacion.userName
         holder.textViewTitle.text = publicacion.title
-        holder.ratingBar.rating = publicacion.rank.toFloat()
+       // holder.ratingBar.rating = publicacion.rank.toFloat()
 
         // Cargar imagen con Glide
         val defaultImage = R.drawable.default_example
@@ -57,6 +58,11 @@ class PublicacionFavsAdapter(
             holder.imageViewProducte.setImageResource(defaultImage)
         }
 
+        // Cargar comentarios al inicializar
+        val db = FirebaseFirestore.getInstance()
+        val publiRef = db.collection("publicaciones").document(publicacion.publiId)
+        cargarComentarios(publiRef, holder)
+
         // Listener para clic en el item
         holder.itemView.setOnClickListener {
             itemClickListener(publicacion)
@@ -64,11 +70,23 @@ class PublicacionFavsAdapter(
 
         // Listener para botón de enviar comentario
         holder.btnEnviarComentario.setOnClickListener {
-            val nuevoComentario = holder.editTextComentario.text.toString()
-            if (nuevoComentario.isNotEmpty()) {
-                holder.textComentario1.text = holder.textComentario2.text
-                holder.textComentario2.text = nuevoComentario
-                holder.editTextComentario.text.clear()
+            val nuevoComentarioTexto = holder.editTextComentario.text.toString().trim()
+            val userName = FirebaseAuth.getInstance().currentUser?.displayName ?: "Usuario"
+            if (nuevoComentarioTexto.isNotEmpty()) {
+                val nuevoComentario = mapOf(
+                    "usuario" to userName,
+                    "texto" to nuevoComentarioTexto
+                )
+                publiRef.update("comentarios", FieldValue.arrayUnion(nuevoComentario))
+                    .addOnSuccessListener {
+                        Toast.makeText(holder.itemView.context, "Comentario guardado", Toast.LENGTH_SHORT).show()
+                        holder.editTextComentario.text.clear()
+                        cargarComentarios(publiRef, holder)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Comentarios", "Error al guardar comentario", e)
+                        Toast.makeText(holder.itemView.context, "Error al guardar comentario", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
 
@@ -142,5 +160,18 @@ class PublicacionFavsAdapter(
         publicacionesList.clear()
         publicacionesList.addAll(newList)
         notifyDataSetChanged()
+    }
+
+    private fun cargarComentarios(publiRef: com.google.firebase.firestore.DocumentReference, holder: com.paudam.colzone.adapter.PublicacionFavsAdapter.PublicacionViewHolder) {
+        publiRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val comentarios = document.get("comentarios") as? List<Map<String, String>> ?: emptyList()
+                val ultimos = comentarios.takeLast(2)
+                holder.textComentario1.text = ultimos.getOrNull(0)?.get("texto") ?: ""
+                holder.textComentario2.text = ultimos.getOrNull(1)?.get("texto") ?: ""
+            }
+        }.addOnFailureListener { e ->
+            Log.e("Comentarios", "Error al obtener comentarios", e)
+        }
     }
 }
